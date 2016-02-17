@@ -255,7 +255,6 @@ function create_config( )
     "xy4",
     "xy5",
     "xy6",
-    "invite",
     "invite_xy",
     "spm"
     },
