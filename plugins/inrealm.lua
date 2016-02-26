@@ -214,8 +214,10 @@ local function returnids(cb_extra, success, result)
     local chatname = result.print_name
     local text = 'Users in '..string.gsub(chatname,"_"," ")..' ('..result.id..'):'..'\n'..''
     for k,v in pairs(result.members) do
-        local username = ""
-        text = text .. "- " .. string.gsub(v.print_name,"_"," ") .. "  (" .. v.id .. ") \n"
+    	if v.print_name then
+        	local username = ""
+        	text = text .. "- " .. string.gsub(v.print_name,"_"," ") .. "  (" .. v.id .. ") \n"
+        end
     end
     send_large_msg(receiver, text)
         local file = io.open("./groups/lists/"..result.id.."memberlist.txt", "w")
@@ -230,8 +232,10 @@ local function returnidsfile(cb_extra, success, result)
     local chatname = result.print_name
     local text = 'Users in '..string.gsub(chatname,"_"," ")..' ('..result.id..'):'..'\n'..''
     for k,v in pairs(result.members) do
-        local username = ""
-        text = text .. "- " .. string.gsub(v.print_name,"_"," ") .. "  (" .. v.id .. ") \n"
+    	if v.print_name then
+        	local username = ""
+        	text = text .. "- " .. string.gsub(v.print_name,"_"," ") .. "  (" .. v.id .. ") \n"
+        end
     end
         local file = io.open("./groups/lists/"..result.id.."memberlist.txt", "w")
         file:write(text)
@@ -456,15 +460,15 @@ function run(msg, matches)
 		chat_info(receiver, returnids, {receiver=receiver})
 	end
 
-
-    if not is_sudo(msg) or not is_admin(msg) and not is_realm(msg) then
-		return  --Do nothing
-	end
     if matches[1] == 'creategroup' and matches[2] then
         group_name = matches[2]
         group_type = 'group'
         return create_group(msg)
     end
+    
+    if not is_sudo(msg) or not is_admin(msg) and not is_realm(msg) then
+		return  --Do nothing
+	end
 
     if matches[1] == 'createrealm' and matches[2] then
         group_name = matches[2]
@@ -674,26 +678,6 @@ return {
     "^[!/](list) (.*)$",
         "^[!/](log)$",
         "^[!/](help)$",
-         "^(creategroup) (.*)$",
-    "^(createrealm) (.*)$",
-    "^(setabout) (%d+) (.*)$",
-    "^(setrules) (%d+) (.*)$",
-    "^(setname) (.*)$",
-    "^(setgpname) (%d+) (.*)$",
-    "^(setname) (%d+) (.*)$",
-        "^(lock) (%d+) (.*)$",
-    "^(unlock) (%d+) (.*)$",
-    "^(setting) (%d+)$",
-        "^(wholist)$",
-        "^(who)$",
-        "^(type)$",
-    "^(kill) (chat) (%d+)$",
-    "^(kill) (realm) (%d+)$",
-    "^(addadmin) (.*)$", -- sudoers only
-    "^(removeadmin) (.*)$", -- sudoers only
-    "^(list) (.*)$",
-        "^(log)$",
-        "^(help)$",
         "^!!tgservice (.+)$",
   },
   run = run
