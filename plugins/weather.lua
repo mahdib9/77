@@ -1,6 +1,6 @@
 do
 
-local BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+local BASE_URL = "http://m.accuweather.com/en/ir/sar-dasht/207133/current-weather/207133?p=huawei2"
 
 local function get_weather(location)
   print("Finding weather in ", location)
